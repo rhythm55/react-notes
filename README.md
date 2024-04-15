@@ -73,6 +73,70 @@ A:
 
 ***
 
+### React Fiber
+
+- React Fiber is a concept of ReactJS that is used to render a system faster, smoother and smarter.
+- became the default reconciler for React 16 and above
+- Fiber is a plain js object with some properties. Represents a unit of work (ex. work is state change, changes in DOM)
+- Fiber is asynchronous, React can:
+    - Split work into chunks and prioritize tasks
+    - Pause, resume, and restart rendering work on components as new updates come in
+    - Reuse previously completed work and even abort it if not needed
+***
+
+# React Fiber Reconciliation
+-process of syncing virtual DOM with actual DOM
+- When we make changes or add data, React creates a new Virtual DOM and compares it with the previous one. Comparison is done by `Diffing Algorithm`. 
+- Diff algorithm: Finds out the diff between old virtual DOM and new virtual DOM
+- note: Finding out diff between two js objects is fast as compared to diff between actual DOMs
+- It finds out the changed nodes and updates only the changed nodes in Real DOM leaving the rest nodes as it is. This process is called Reconciliation.
+- Diffing algo assumptions -
+    1. two elements in same position but in different type - react will re render the node and old component will unmount
+        ```
+          // old
+          <div><h1>Title</h1></div>
+
+          //new
+          <div><h2>Title</h2></div>
+        ```
+    2. two elements same type and element but different attribute - react will keep same underline DOM and only update the attributes that got changed
+        ```
+        // only className will be changed
+           // old
+          <div className="before">some</div>
+
+          //new
+          <div className="after">some</div>
+        ```
+    3. Component update - keeps the same instace just updates the props passed to it i.e update props and render
+        ```
+        // only className will be changed
+           // old
+          <Welcome name="first"/>
+
+          //new
+          <Welcome name="last"/>
+        ```
+        
+    4. Children : compare and render : consider a li elements - where a new li inserted at first place - now rest of the elements are same just becuase one new element inserted at top it should not re render whole list - it will be inefficient. In order to make it efficient react uses `key` to compare . by comparing key it can know which one are just reshuffled and doesnt need re rendering and which one needs to be rendered.
+       ```
+        // only li with key 4 will re rendered 
+           // old
+          <ul>
+            <li key={1}>1</li>
+            <li key={2}>2</li>
+          </ul>
+
+          //new
+           <ul>
+            <li key={4}>4</li>
+            <li key={1}>1</li>
+            <li key={2}>2</li>
+          </ul>
+        ```
+
+***
+
 ### Q: Diff bw react and reactDOM
 
 A: 
