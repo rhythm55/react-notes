@@ -431,5 +431,156 @@ function App() {
   )
 }
 ```
+***
+### Q: What is Conditional Rendering? explain with a code example.
+
+A:
+
+rendering based on a condition
+```
+// Using Ternary operator as a shorthand way or writing an if-else statement
+{isLoggedIn ? (return <UserGreeting />) : (return <GuestGreeting />)};
+```
+
+
+
+***
+
+### Q: What are React Hooks?
+
+A
+- React Hooks are simple JavaScript functions that let you use React features without writing a class.
+- Hooks can be stateful and can manage side-effects
+
+***
+### Q: Why do we need useState Hook?
+
+A:
+- useState hook is used to maintain the state in our React application.
+- Constantly watches this variable for a change via set method
+- whenever a change is found react start reconcialiation algorithm
+
+- how to import
+```
+import React, { useState } from "react";
+```
+
+- how to create
+```
+const [state, setState] = useState(initialstate);
+```
+
+***
+
+### Q: Why do we need a useEffect Hook?
+
+A:
+
+- useEffect Hook is javascript function provided by react.
+- It can be triggered as side effect of say fetch api
+- useEffect accepts two arguments, a callback function and a dependency array.
+  The second argument is optional.
+```
+  useEffect(() => { fetchData() }, []);
+```
+
+```
+useEffect(() => {
+        effect
+        return () => {
+            cleanup
+        }
+    }, [input])
+```
+
+***
+
+### Q: How will useEffect behave in diff scenarios
+
+A:
+- if no dependency array => useEffect is called on every component render
+- if the dependency array is empty = [] => useEffect is called on initial render(only called once)
+- if we have something as dependency array => useEffect is called everytime dependency is changed
+***
+
+### Class components
+- extends React.Component
+- have a built-in state object
+- ```
+  class Example extends React.Component{
+    constructor(props){
+      super(props);
+      this.state = {counter: 0}
+    }
+
+    render(){
+      return <h1>hey</h1>
+    }
+  }
+  ```
+
+***
+
+### Q: What is the order of life cycle method calls in Class Based Components?
+
+A:
+
+Following is the order of life cycle method in class bases components -
+1. constructor
+2. render
+3. componentDidMount
+4. componentDidUpdate
+5. componentWillUnmount
+![Screenshot 2024-03-15 at 4 05 09 PM](https://github.com/rhythm55/Namaste-react-restart/assets/36883992/29bd3481-bf11-4a9d-a104-7a5f34a6afa9)
+***
+
+### Q: Why do we use componentDidMount?
+
+A:
+- it is a lifecycle method called once component is mounted
+- allows us to execute the React code when the component is already placed in the DOM 
+- Helpful when we have to call api's or need to update the state
+
+***
+
+### Q: Why do we use componentWillUnmount? Show with example.
+
+A:
+
+- `componentWillUnmount` is called before destroying the component.
+- useful for the cleanup of the application
+
+example - 
+we set a timer inside componentDidMount inside about page
+```
+  componentDidMount() {
+    // console.log("child componentDidMount called");
+    this.timer = setInterval(() => {
+      console.log("i was called");
+    }, 1000);
+  }
+```
+Now ,if we move to other pages like contact or home - counter will still be there
+reason is because its a SPA , we are refreshing the components hence setInterval remains intact
+Now to cleanup above we can use componentWillUnmount
+```
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+```
+In above as soon as we move to next component say home page - component will be destoryed
+before destorying componentWillUnmount will be called and clearInterval executes
+
+***
+
+### Q:Why do we use super(props) in constructor?
+
+A:
+
+- super(props) is used to inherit the properties and access of variables 
+ of the React parent class when we initialize our component.
+- The main difference between super() and super(props) is the this.props
+ is undefined in child's constructor in super()
+ but this.props contains the passed props if super(props) is used.
 
 ***
