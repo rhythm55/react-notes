@@ -645,6 +645,92 @@ A:
    return <RestrauntCardPromoted name="xyz" description="desc goes here"/>
   ```
 ***
+### Pure Components
+- Component that renders the same output for the same state and props
+- skips re-renders for same props and state
+
+- Pure function component
+  - ```
+    import React, { memo } from 'react';
+  
+    function Greeting({ message }) {
+        return (
+          <div>
+            <h6>{ message }</h6>
+          </div>
+        )
+      }
+      
+      // Wrap component using `React.memo()`
+      export default memo(Greeting);
+    ```
+  - custom bailout condition
+    ```
+      function arePropsEqual(prevProps, nextProps) {
+        return prevProps.label === nextProps.label; 
+      }
+      
+      // Wrap component using `React.memo()` and pass `arePropsEqual`
+      export default memo(PercentageStat, arePropsEqual);
+    ```
+  
+- Pure class component
+  ```
+    import { PureComponent } from 'react';
+  
+    class Greeting extends PureComponent {
+      render() {
+        return <h1>Hello, {this.props.name}!</h1>;
+      }
+    }
+  ```
+***
+
+### controlled vs uncontrolled component
+
+- Controlled Component
+    - the form data is handled by a component state.
+    - Changes to the form elements are controlled by the component's state, and any changes to the state are reflected in the form elements.
+    - Use controlled components when you need to perform validation, modify, or react to every change of the form data.
+    - ```
+        const ControlledComponent = () => {
+          const [value, setValue] = useState("");
+        
+          const handleChange = (event) => {
+            setValue(event.target.value);
+          };
+        
+          return (
+            <input
+              type="text"
+              value={value}
+              onChange={handleChange}
+            />
+          );
+        };
+      ```
+- Uncontrolled Component
+    - the form data is handled by the DOM itself
+    - Refs are used to access the form elements directly to retrieve their values when needed.
+    - Use uncontrolled components when you want a simpler approach and don't need to manage the form data in the React state.
+    - In cases where you need to optimize performance and reduce the number of re-renders, uncontrolled components can be more efficient.
+    - ```
+        const UncontrolledComponent = () => {
+          const inputRef = useRef(null);
+        
+          const handleClick = () => {
+            alert(inputRef.current.value);
+          };
+        
+          return (
+            <>
+              <input type="text" ref={inputRef} />
+              <button onClick={handleClick}>Get Value</button>
+            </>
+          );
+        };
+      ```
+***
 
 ### Q: When and why do we need lazy()?
 
