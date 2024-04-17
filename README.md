@@ -618,6 +618,34 @@ A:
 
 ***
 
+# higher order component
+- pure functions
+- takes a existing component enhances it and returns the component
+- used for enhacing
+
+- Higher order component
+  ```
+    export const withPromoteLabel = (RestrauntCard) => {
+      return (props) => {
+        // returns component
+        return (
+          // component returns jsx
+          <>
+            <div className="promoted">Promoted</div>
+            <RestrauntCard {...props} />
+          </>
+        );
+      };
+    };
+  ```
+- Higer order component invocation
+  ```
+   const RestrauntCardPromoted = withPromoteLabel(RestrauntCardComponent);
+
+   return <RestrauntCardPromoted name="xyz" description="desc goes here"/>
+  ```
+***
+
 ### Q: When and why do we need lazy()?
 
 A: 
@@ -687,3 +715,5 @@ Disadvantage:
 
 
 ***
+
+
