@@ -908,3 +908,43 @@ A:
 
 ***
 
+### forwardRef and useImperativeHandle
+
+- forwardRef
+    - lets your component expose a DOM node to parent component with a ref.
+- useImperativeHandle
+  - React Hook that lets you customize the handle exposed as a ref.
+  - ex: suppose you don’t want to expose the entire <input> DOM node, but you want to expose focus
+
+```
+// App.js
+export default function App() {
+  const nameRef = useRef(null);
+  const handleFocus = () => {
+    nameRef.current.focus();
+  };
+
+  return (
+    <>
+      <FormInput placeholder="enter your name" ref={nameRef} />
+      <button onClick={() => handleFocus()}>focus</button>
+  );
+}
+
+
+//FormInput.js
+const FormInput = forwardRef(function FormInput(props, ref) {
+  const inpRef = useRef(null);
+
+  useImperativeHandle(ref, () => {
+    return {
+      focus() {
+        return inpRef.current.focus();
+      },
+    };
+  });
+
+  return <input ref={inpRef} placeholder={props.placeholder} />;
+});
+```
+***
