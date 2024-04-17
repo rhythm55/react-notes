@@ -649,7 +649,10 @@ A:
 - Component that renders the same output for the same state and props
 - skips re-renders for same props and state
 
-- Pure function component
+- Pure function component using memo
+- ### memo:
+    - lets you skip re-rendering a component when its props are unchanged.
+    - `memo(Component, arePropsEqual?)`
   - ```
     import React, { memo } from 'react';
   
@@ -947,4 +950,30 @@ const FormInput = forwardRef(function FormInput(props, ref) {
   return <input ref={inpRef} placeholder={props.placeholder} />;
 });
 ```
+***
+
+### useMemo
+- React Hook that lets you cache the result of a calculation between re-renders.
+- `useMemo(calculateValue, dependencies) `
+- ```
+      const visibleTodos = useMemo(
+          () => filterTodos(todos, tab),
+          [todos, tab]
+        );
+  ```
+***
+
+### useCallback
+-  React Hook that lets you cache a function definition between re-renders.
+-   `const cachedFn = useCallback(fn, dependencies)`
+    
+- ```
+    export default function ProductPage({ productId, referrer, theme }) {
+        const handleSubmit = useCallback((orderDetails) => {
+          post('/product/' + productId + '/buy', {
+            referrer,
+            orderDetails,
+          });
+        }, [productId, referrer]);
+  ```    
 ***
