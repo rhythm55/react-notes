@@ -977,3 +977,59 @@ const FormInput = forwardRef(function FormInput(props, ref) {
         }, [productId, referrer]);
   ```    
 ***
+
+## React router
+- we use library `react-router-dom`
+- `BrowserRouter` is a router implementation that uses the HTML5 history API (pushstate, replacestate, and popstate events) to keep your UI in sync with the URL
+- ```
+    const appRoutes = createBrowserRouter([
+      {
+        path: '/',
+        element: <App/>,
+        children: [
+          {
+            path: '/contact',
+            element: <Contact/>,
+            errorElement: <Error/>
+          }
+        ]
+      }
+    ])
+    
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<RouterProvider  router={appRoutes}/>)
+
+  // anywhere in application
+   <Link to="/contact">Contact us</Link>
+  ```
+- another way
+  ```
+    //index.js
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+
+    //app.js
+    function App() {
+        return (
+          <div className="container">
+            <nav>
+              <ul>
+                <Link to="/" class="list">
+                  Home
+                </Link>
+              </ul>
+            </nav>
+      
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </div>
+        );
+      }
+  ```
+***
+
+### React testing 
+
+***
