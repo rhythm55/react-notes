@@ -978,6 +978,37 @@ const FormInput = forwardRef(function FormInput(props, ref) {
   ```    
 ***
 
+### Profiler component
+- lets you measure rendering performance of a React tree programmatically.
+```
+const Shopping = () => {
+ const onRender = (
+    id,
+    phase,
+    actualDuration,
+    baseDuration,
+    startTime,
+    commitTime
+  ) => {
+    console.log("id ", id);
+    console.log("phase ", phase); //"mount", "update" or "nested-update"
+    console.log("actualDuration ", actualDuration); // milliseconds spent rendering the <Profiler> and its descendants
+    console.log("baseDuration ", baseDuration); // milliseconds estimating how much time it would take to re-render
+    console.log("startTime ", startTime);   // timestamp for when React began rendering the current update
+    console.log("commitTime ", commitTime); //timestamp for when React committed the current update
+  };
+  return (
+    <div className="shopping-container">
+      <Profiler id="shopping" onRender={onRender}>
+          <ItemList />
+      </Profiler>
+    </div>
+  );
+};
+```
+
+***
+
 ## React router
 - we use library `react-router-dom`
 - `BrowserRouter` is a router implementation that uses the HTML5 history API (pushstate, replacestate, and popstate events) to keep your UI in sync with the URL
